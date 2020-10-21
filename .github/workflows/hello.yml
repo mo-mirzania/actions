@@ -45,3 +45,6 @@ jobs:
   
       - name: Installing plugins
         run: sls plugin install -n serverless-python-requirements
+        
+      - name: Deploy sls
+        run: sls deploy -v
