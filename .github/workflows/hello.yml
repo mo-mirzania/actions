@@ -6,11 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.1]
         python-version: [3.6]
+        node-version: [12.1]
 
     steps:
       - name: Checkout source
@@ -31,17 +31,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
-# Install serverless  
-#       - name: serverless deploy
-#         uses: serverless/github-action@master
-#         with:
-#           args: deploy
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_TECH_SUPPORT_ACCESS_KEY_ID }}  
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_TECH_SUPPORT_SECRET_ACCESS_KEY }}
-#           ENV: prod
-       
-# #Run Make File
-#       - name: Run Make File
-#         run: make deploy
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Installing sls
+        uses: serverless/github-action@master
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_TECH_SUPPORT_ACCESS_KEY_ID }}  
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_TECH_SUPPORT_SECRET_ACCESS_KEY }}
+          ENV: stage
+  
+      - name: Installing plugins
+        run: sls plugin install -n serverless-python-requirements
