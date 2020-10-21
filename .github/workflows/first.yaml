@@ -1,0 +1,16 @@
+---
+name: first
+on:
+    push:
+        branches: master
+
+jobs:
+    job1:
+        name: firstjob
+        runs-on: ubuntu-latest
+        steps:
+            - name: Step one
+              uses: actions/checkout@v2
+            - name: Step two
+              run: env | sort
+
