@@ -5,11 +5,11 @@ chardet==3.0.4
 datadog==0.28.0
 decorator==4.4.1
 docutils==0.15.2
-idna==2.8
+idna<2.8,>=2.5
 jmespath==0.9.4
 python-dateutil==2.7.3
 requests==2.20.1
 s3transfer==0.2.1
 six==1.13.0
-urllib3==1.25.7
+urllib3<1.25,>=1.21.1
 onelogin==1.8.1
