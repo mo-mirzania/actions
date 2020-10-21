@@ -26,6 +26,12 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           docker version
 
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.13.1' # The Go version to download (if necessary) and use.
+      - run: go version
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
