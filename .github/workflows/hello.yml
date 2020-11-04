@@ -2,8 +2,10 @@ name: deploy-master
 
 on:
   push:
+    branches-ignore: 
+      - main
   pull_request:
-    branches: master
+    branches: main
 
 jobs:
   build:
