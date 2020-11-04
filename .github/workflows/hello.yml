@@ -42,10 +42,11 @@ jobs:
       - name: Installing sls
         run: |
           sudo npm install -g serverless
+          echo {{ github.ref }}
           serverless config credentials --provider aws --key ${{ secrets.AWS_TECH_SUPPORT_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_TECH_SUPPORT_SECRET_ACCESS_KEY }}
   
       - name: Installing plugins
         run: sls plugin install -n serverless-python-requirements
         
-      - name: Deploy sls
-        run: sls deploy -v
+#       - name: Deploy sls
+#         run: sls deploy -v
