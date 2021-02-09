@@ -1,50 +1,13 @@
-name: deploy-master
-
-on:
-  push:
-    branches: main
+name: Terraform Security Static Analysis
+on: 'push'
 
 jobs:
-  build:
+  tfsec:
+    name: tfsec
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.6]
-        node-version: [12.1]
-
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v1
-        
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version:  ${{ matrix.python-version }}
-          
-      - name: Install dependencies
-        run: |
-          pip install virtualenv
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          docker version
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.13'
-      - run: go version
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-          
-      - name: Installing sls
-        run: |
-          sudo npm install -g serverless
-          echo {{ github.ref }}
-          serverless config credentials --provider aws --key ${{ secrets.AWS_TECH_SUPPORT_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_TECH_SUPPORT_SECRET_ACCESS_KEY }}
-  
-      - name: Installing plugins
-        run: sls plugin install -n serverless-python-requirements
-        
-#       - name: Deploy sls
-#         run: sls deploy -v
+      - name: Terraform security scan
+        uses: triat/terraform-security-scan@v1
