@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform security scan
-        uses: triat/terraform-security-scan@v1
-        env:
-          INPUT_TFSEC_EXCLUDE: AWS006
+        uses: triat/terraform-security-scan@v2.0.2
+        with:
+          tfsec_exclude: AWS006 
 
